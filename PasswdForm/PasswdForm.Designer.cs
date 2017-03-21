@@ -39,10 +39,13 @@
             this.tbInput = new DevExpress.XtraEditors.TextEdit();
             this.lbOutput = new DevExpress.XtraEditors.LabelControl();
             this.lbInput = new DevExpress.XtraEditors.LabelControl();
+            this.lbIV = new DevExpress.XtraEditors.LabelControl();
+            this.tbIV = new DevExpress.XtraEditors.TextEdit();
             ((System.ComponentModel.ISupportInitialize)(this.panel)).BeginInit();
             this.panel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbKey.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbInput.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbIV.Properties)).BeginInit();
             this.SuspendLayout();
             // 
             // panel
@@ -50,6 +53,8 @@
             this.panel.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.panel.Appearance.Options.UseBackColor = true;
             this.panel.BorderStyle = DevExpress.XtraEditors.Controls.BorderStyles.NoBorder;
+            this.panel.Controls.Add(this.tbIV);
+            this.panel.Controls.Add(this.lbIV);
             this.panel.Controls.Add(this.lbKey);
             this.panel.Controls.Add(this.tbKey);
             this.panel.Controls.Add(this.tbOutput);
@@ -69,7 +74,7 @@
             // 
             this.lbKey.Appearance.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbKey.Appearance.ForeColor = System.Drawing.Color.Yellow;
-            this.lbKey.Location = new System.Drawing.Point(205, 45);
+            this.lbKey.Location = new System.Drawing.Point(137, 43);
             this.lbKey.Name = "lbKey";
             this.lbKey.Size = new System.Drawing.Size(25, 19);
             this.lbKey.TabIndex = 9;
@@ -77,7 +82,7 @@
             // 
             // tbKey
             // 
-            this.tbKey.Location = new System.Drawing.Point(254, 44);
+            this.tbKey.Location = new System.Drawing.Point(182, 44);
             this.tbKey.Name = "tbKey";
             this.tbKey.Properties.LookAndFeel.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.False;
             this.tbKey.Size = new System.Drawing.Size(100, 20);
@@ -145,6 +150,24 @@
             this.lbInput.TabIndex = 0;
             this.lbInput.Text = "输入";
             // 
+            // lbIV
+            // 
+            this.lbIV.Appearance.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.lbIV.Appearance.ForeColor = System.Drawing.Color.Yellow;
+            this.lbIV.Location = new System.Drawing.Point(345, 45);
+            this.lbIV.Name = "lbIV";
+            this.lbIV.Size = new System.Drawing.Size(16, 19);
+            this.lbIV.TabIndex = 10;
+            this.lbIV.Text = "IV";
+            // 
+            // tbIV
+            // 
+            this.tbIV.Location = new System.Drawing.Point(378, 44);
+            this.tbIV.Name = "tbIV";
+            this.tbIV.Properties.LookAndFeel.TouchUIMode = DevExpress.LookAndFeel.TouchUIMode.False;
+            this.tbIV.Size = new System.Drawing.Size(100, 20);
+            this.tbIV.TabIndex = 11;
+            // 
             // PasswdForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 14F);
@@ -162,6 +185,7 @@
             this.panel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.tbKey.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.tbInput.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.tbIV.Properties)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -178,5 +202,7 @@
         private System.Windows.Forms.TextBox tbOutput;
         private DevExpress.XtraEditors.TextEdit tbKey;
         private DevExpress.XtraEditors.LabelControl lbKey;
+        private DevExpress.XtraEditors.LabelControl lbIV;
+        private DevExpress.XtraEditors.TextEdit tbIV;
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using System.Security.Cryptography;
+using System.IO;
 
 namespace PasswdForm
 {
@@ -28,7 +29,8 @@ namespace PasswdForm
             //byte[] palindata = Encoding.Default.GetBytes(tbInput.Text);//将要加密的字符串转换为字节数组
             //byte[] encryptdata = md5.ComputeHash(palindata);//将字符串加密后也转换为字符数组
             //tbOutput.Text = Convert.ToBase64String(encryptdata);//将加密后的字节数组转换为加密字符串
-            tbOutput.Text = Encryption(tbInput.Text.Trim());
+            //tbOutput.Text = Encryption(tbInput.Text.Trim());
+            tbOutput.Text = Encode(tbInput.Text.Trim());
         }
 
         private void btnResolve_Click(object sender, EventArgs e)
@@ -37,7 +39,8 @@ namespace PasswdForm
             //byte[] palindata = Encoding.Default.GetBytes(tbInput.Text);//将要加密的字符串转换为字节数组
             //byte[] encryptdata = md5.ComputeHash(palindata);//将字符串加密后也转换为字符数组
             //tbOutput.Text = Convert.ToBase64String(encryptdata);//将加密后的字节数组转换为加密字符串
-            tbOutput.Text = Decrypt(tbInput.Text.Trim());
+            //tbOutput.Text = Decrypt(tbInput.Text.Trim());
+            tbOutput.Text = Decode(tbInput.Text.Trim());
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -45,6 +48,7 @@ namespace PasswdForm
             tbInput.Text = "";
             tbOutput.Text = "";
             tbKey.Text = "";
+            tbIV.Text = "";
         }
 
         //加密
@@ -87,5 +91,62 @@ namespace PasswdForm
                 return "";
             }
         }
+
+        /// <summary>
+        /// 可逆加密解密
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string Encode(string data)
+        {
+            try
+            {
+                byte[] byKey = ASCIIEncoding.ASCII.GetBytes(tbKey.Text.Trim());
+                byte[] byIV = ASCIIEncoding.ASCII.GetBytes(tbIV.Text.Trim());
+                DESCryptoServiceProvider cryptoProvider = new DESCryptoServiceProvider();
+                int i = cryptoProvider.KeySize;
+                MemoryStream ms = new MemoryStream();
+                CryptoStream cst = new CryptoStream(ms, cryptoProvider.CreateEncryptor(byKey, byIV), CryptoStreamMode.Write);
+                StreamWriter sw = new StreamWriter(cst);
+                sw.Write(data);
+                sw.Flush();
+                cst.FlushFinalBlock();
+                sw.Flush();
+                return Convert.ToBase64String(ms.GetBuffer(), 0, (int)ms.Length);
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show("解密失败" + ex.Message);
+               return "";
+            }
+        }
+        public string Decode(string data)
+        {
+            try
+            {
+                byte[] byKey = ASCIIEncoding.ASCII.GetBytes(tbKey.Text.Trim());
+                byte[] byIV = ASCIIEncoding.ASCII.GetBytes(tbIV.Text.Trim());
+                byte[] byEnc;
+                try
+                {
+                    byEnc = Convert.FromBase64String(data);
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+                DESCryptoServiceProvider cryptoProvider = new DESCryptoServiceProvider();
+                MemoryStream ms = new MemoryStream(byEnc);
+                CryptoStream cst = new CryptoStream(ms, cryptoProvider.CreateDecryptor(byKey, byIV), CryptoStreamMode.Read);
+                StreamReader sr = new StreamReader(cst);
+                return sr.ReadToEnd();
+            }
+            catch (Exception ex)
+            {
+               MessageBox.Show("解密失败" + ex.Message);
+               return "";
+            }
+        }
+
     }
 }
